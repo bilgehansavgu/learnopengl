@@ -30,3 +30,9 @@
 *.exe
 *.out
 *.app
+app
+
+# MacOS generated files
+.DS_Store
+*.dSYM
+

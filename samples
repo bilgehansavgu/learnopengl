@@ -1,0 +1,77 @@
+#include <iostream>
+
+int main()
+{
+    char ch{};
+    while (std::cin.get(ch))
+        std::cout << ch;
+
+    return 0;
+}
+
+#include <iostream> // For input/output
+#include <string>   // For using strings
+#include <vector>   // For using vectors
+
+// Namespace declaration
+namespace MyNamespace {
+    void greet() {
+        std::cout << "Hello from MyNamespace!" << std::endl;
+    }
+}
+
+// A simple class
+class Animal {
+public:
+    std::string name;
+    int age;
+
+    Animal(const std::string& n, int a) : name(n), age(a) {}
+
+    void speak() const {
+        std::cout << name << " says: Hello! I am " << age << " years old." << std::endl;
+    }
+};
+
+// Main function
+int main() {
+    // Basic I/O and variables
+    std::cout << "Enter your name: ";
+    std::string userName;
+    std::cin >> userName;
+    std::cout << "Welcome, " << userName << "!" << std::endl;
+
+    // Loop example
+    std::cout << "Counting to 5:" << std::endl;
+    for (int i = 1; i <= 5; ++i) {
+        std::cout << i << " ";
+    }
+    std::cout << std::endl;
+
+    // Conditional example
+    int number;
+    std::cout << "Enter a number: ";
+    std::cin >> number;
+    if (number % 2 == 0) {
+        std::cout << number << " is even." << std::endl;
+    } else {
+        std::cout << number << " is odd." << std::endl;
+    }
+
+    // Using a class
+    Animal myPet("Buddy", 3);
+    myPet.speak();
+
+    // Using a namespace
+    MyNamespace::greet();
+
+    // Vector example
+    std::vector<int> numbers = {1, 2, 3, 4, 5};
+    std::cout << "Vector contents: ";
+    for (int num : numbers) {
+        std::cout << num << " ";
+    }
+    std::cout << std::endl;
+
+    return 0;
+}
