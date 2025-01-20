@@ -3,6 +3,7 @@
 
 #include "program_helpers.h"
 #include "shader_io.h"
+#include "shader_helpers.h"
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
@@ -48,79 +49,22 @@ int main()
 
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-
     unsigned int vertexShaderID;
-    vertexShaderID = glCreateShader(GL_VERTEX_SHADER);
-    std::string vShaderString = LoadShaderAsString("shaders/vertex.glsl");
-    const char* vertexShaderSource = vShaderString.c_str();
-    glShaderSource(vertexShaderID, 1, &vertexShaderSource, NULL);
-    glCompileShader(vertexShaderID);
-    int vertexCompileSuccess;
-    char vertexCompileInfoLog[512];
-    glGetShaderiv(vertexShaderID, GL_COMPILE_STATUS, &vertexCompileSuccess);
-    if (!vertexCompileSuccess)
-    {
-        glGetShaderInfoLog(vertexShaderID, 512, NULL, vertexCompileInfoLog);
-        std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << vertexCompileInfoLog << std::endl;
-    }
+    vertexShaderID = compileShader("shaders/vertex.glsl", GL_VERTEX_SHADER);
 
     unsigned int fragShaderID;
-    fragShaderID = glCreateShader(GL_FRAGMENT_SHADER);
-    std::string fShaderString = LoadShaderAsString("shaders/frag.glsl");
-    const char* fragShaderSource = fShaderString.c_str();
-    glShaderSource(fragShaderID, 1, &fragShaderSource, NULL);
-    glCompileShader(fragShaderID);
-    int fragCompileSuccess;
-    char fragCompileInfoLog[512];
-    glGetShaderiv(fragShaderID, GL_COMPILE_STATUS, &fragCompileSuccess);
-    if (!fragCompileSuccess)
-    {
-        glGetShaderInfoLog(fragShaderID, 512, NULL, fragCompileInfoLog);
-        std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << fragCompileInfoLog << std::endl;
-    }
+    fragShaderID = compileShader("shaders/frag.glsl", GL_FRAGMENT_SHADER);
+
+    unsigned int ProgramID;
+    ProgramID = compileProgram(vertexShaderID, fragShaderID);
 
     unsigned int fragShader1ID;
-    fragShader1ID = glCreateShader(GL_FRAGMENT_SHADER);
-    std::string fShaderString1 = LoadShaderAsString("shaders/frag_1.glsl");
-    const char* fragShaderSource1 = fShaderString1.c_str();
-    glShaderSource(fragShader1ID, 1, &fragShaderSource1, NULL);
-    glCompileShader(fragShader1ID);
-    int fragCompileSuccess1;
-    char fragCompileInfoLog1[512];
-    glGetShaderiv(fragShader1ID, GL_COMPILE_STATUS, &fragCompileSuccess1);
-    if (!fragCompileSuccess1)
-    {
-        glGetShaderInfoLog(fragShader1ID, 512, NULL, fragCompileInfoLog1);
-        std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << fragCompileInfoLog1 << std::endl;
-    }
+    compileShader("shaders/frag1.glsl", GL_FRAGMENT_SHADER);
 
-    unsigned int shaderProgramID;
-    shaderProgramID = glCreateProgram();
-    glAttachShader(shaderProgramID, vertexShaderID);
-    glAttachShader(shaderProgramID, fragShaderID);
-    glLinkProgram(shaderProgramID);
-    int linkSuccess;
-    char linkInfoLog[512];
-    glGetProgramiv(shaderProgramID, GL_LINK_STATUS, &linkSuccess);
-    if (!linkSuccess)
-    {
-        glGetProgramInfoLog(shaderProgramID, 512, NULL, linkInfoLog);
-        std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << linkInfoLog << std::endl;
-    }
+    unsigned int compileProgram(unsigned int vertexShaderID, unsigned int fragShader1ID);
 
     unsigned int shaderProgram1ID;
-    shaderProgram1ID = glCreateProgram();
-    glAttachShader(shaderProgram1ID, vertexShaderID);
-    glAttachShader(shaderProgram1ID, fragShader1ID);
-    glLinkProgram(shaderProgram1ID);
-    int linkSuccess1;
-    char linkInfoLog1[512];
-    glGetProgramiv(shaderProgram1ID, GL_LINK_STATUS, &linkSuccess1);
-    if (!linkSuccess1)
-    {
-        glGetProgramInfoLog(shaderProgram1ID, 512, NULL, linkInfoLog1);
-        std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << linkInfoLog1 << std::endl;
-    }
+    shaderProgram1ID = compileProgram(vertexShaderID, fragShader1ID);
 
     glDeleteShader(vertexShaderID);
     glDeleteShader(fragShaderID);
@@ -129,7 +73,7 @@ int main()
     {
         glClear(GL_COLOR_BUFFER_BIT);
 
-        glUseProgram(shaderProgramID);
+        glUseProgram(ProgramID);
 
         glBindVertexArray(VAOs[0]);
         glDrawArrays(GL_TRIANGLES, 0, 3);
