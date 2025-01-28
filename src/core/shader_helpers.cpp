@@ -1,13 +1,13 @@
-#include <iostream>
-#include <glad/glad.h>
+#include "shader_helpers.h"
 
-#include "shader_io.h"
-
-unsigned int compileShader(const std::string &shaderPath, GLenum shaderType)
+bool compileShader(unsigned int &shaderID, const std::string &shaderPath, GLenum shaderType)
 {
-    unsigned int shaderID;
     shaderID = glCreateShader(shaderType);
-    std::string shaderString = LoadShaderAsString(shaderPath);
+    std::string shaderString;
+    if(!LoadShaderAsString(shaderString, shaderPath)){
+        return false;
+    }
+
     const char* shaderSource = shaderString.c_str();
     glShaderSource(shaderID, 1, &shaderSource, NULL);
     glCompileShader(shaderID);
@@ -19,17 +19,22 @@ unsigned int compileShader(const std::string &shaderPath, GLenum shaderType)
     {
         glGetShaderInfoLog(shaderID, 512, NULL, compileInfoLog);
         std::cout << "ERROR::SHADER::COMPILATION_FAILED\n" << compileInfoLog << std::endl;
+        return false;
     }
-    return shaderID;
+
+    return true;
 }
 
-unsigned int compileProgram(unsigned int vertexShaderID, unsigned int fragShaderID)
+bool compileProgram(unsigned int &shaderProgramID, unsigned int vertexShaderID, unsigned int fragShaderID)
 {
-    unsigned int shaderProgramID;
     shaderProgramID = glCreateProgram();
+    
     glAttachShader(shaderProgramID, vertexShaderID);
     glAttachShader(shaderProgramID, fragShaderID);
     glLinkProgram(shaderProgramID);
+
+    glDeleteShader(vertexShaderID);
+    glDeleteShader(fragShaderID);
     
     int linkSuccess;
     char linkInfoLog[512];
@@ -38,5 +43,9 @@ unsigned int compileProgram(unsigned int vertexShaderID, unsigned int fragShader
     {
         glGetProgramInfoLog(shaderProgramID, 512, NULL, linkInfoLog);
         std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << linkInfoLog << std::endl;
+
+        return false;
     }
+    
+    return true;
 }

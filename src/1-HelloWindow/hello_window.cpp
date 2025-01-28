@@ -15,13 +15,13 @@
 // };
 
 // // settings
-// const unsigned int SCR_WIDTH = 800;
-// const unsigned int SCR_HEIGHT = 600;
+// constexpr unsigned int SCR_WIDTH = 800;
+// constexpr unsigned int SCR_HEIGHT = 600;
 
 // int main(void)
 // {
 //     OpenGLInitPayload payload = {SCR_WIDTH, SCR_HEIGHT, "Hello OpenGL!", key_callback};
-//     OpenGLInitResult setup_result = initializeOpenGL(payload);
+//     OpenGLInitResult openGLInstance = initializeOpenGL(payload);
 
 //     unsigned int VBO;
 //     glGenBuffers(1, &VBO);
@@ -33,28 +33,16 @@
 
 //     // render loop
 //     // -----------
-//     while (!glfwWindowShouldClose(setup_result.window))
+//     while (!glfwWindowShouldClose(openGLInstance.window))
 //     {
 //         glClear(GL_COLOR_BUFFER_BIT);
 
 //         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
 //         // -------------------------------------------------------------------------------
-//         glfwSwapBuffers(setup_result.window);
+//         glfwSwapBuffers(openGLInstance.window);
 //         glfwPollEvents();
 //     }
 
 //     glfwTerminate();
 //     return 0;
-// }
-
-// void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
-// {
-//     if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
-//         glfwSetWindowShouldClose(window, true);
-//     }
-// }
-
-// void framebuffer_size_callback(GLFWwindow* window, int width, int height)
-// {
-//     glViewport(0, 0, width, height);
 // }

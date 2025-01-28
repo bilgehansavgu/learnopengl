@@ -1,0 +1,53 @@
+{
+    "version": 3,
+    "configurePresets": [
+      {
+        "name": "windows-default",
+        "displayName": "Windows Default",
+        "description": "Default configuration for Windows using Visual Studio",
+        "generator": "Visual Studio 17 2022",
+        "binaryDir": "${sourceDir}/build/windows-default",
+        "architecture": "x64",
+        "cacheVariables": {
+          "CMAKE_BUILD_TYPE": "Debug",
+          "CMAKE_EXPORT_COMPILE_COMMANDS": "YES"
+        },
+        "condition": {
+          "type": "equals",
+          "lhs": "${hostSystemName}",
+          "rhs": "Windows"
+        }
+      },
+      {
+        "name": "macos-default",
+        "displayName": "macOS Default",
+        "description": "Default configuration for macOS using Unix Makefiles",
+        "generator": "Unix Makefiles",
+        "binaryDir": "${sourceDir}/build/macos-default",
+        "cacheVariables": {
+          "CMAKE_BUILD_TYPE": "Debug",
+          "CMAKE_OSX_ARCHITECTURES": "arm64",
+          "CMAKE_EXPORT_COMPILE_COMMANDS": "YES"
+        },
+        "condition": {
+          "type": "equals",
+          "lhs": "${hostSystemName}",
+          "rhs": "Darwin"
+        }
+      }
+    ],
+    "buildPresets": [
+      {
+        "name": "windows-default",
+        "configurePreset": "windows-default",
+        "displayName": "Build Windows Default",
+        "description": "Build the default configuration for Windows"
+      },
+      {
+        "name": "macos-default",
+        "configurePreset": "macos-default",
+        "displayName": "Build macOS Default",
+        "description": "Build the default configuration for macOS"
+      }
+    ]
+  }

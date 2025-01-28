@@ -1,4 +1,8 @@
+#ifndef PROGRAM_HELPERS_H
+#define PROGRAM_HELPERS_H
+
 #include <iostream>
+#include <GLFW/glfw3.h>
 
 struct OpenGLInitPayload {
     unsigned int SCR_WIDTH;
@@ -16,3 +20,5 @@ struct OpenGLInitResult {
 };
 
 OpenGLInitResult initializeOpenGL(OpenGLInitPayload payload);
+
+#endif

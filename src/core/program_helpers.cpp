@@ -1,6 +1,5 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-#include <iostream>
 
 #include "program_helpers.h"
 
@@ -23,7 +22,6 @@ OpenGLInitResult initializeOpenGL(OpenGLInitPayload payload)
 #ifdef __APPLE__
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 #endif
-
     // glfw: window creation
     // --------------------
     result.window = glfwCreateWindow(payload.SCR_WIDTH, payload.SCR_HEIGHT, payload.window_name.c_str(), NULL, NULL);
